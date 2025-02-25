@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function verifierCleCpam(numero){
+        if(typeof numero !== 'string'){
+            console.error('Le numéro doit être une chaîne de caractère');
+            return false;
+        }
+        if(!/^\d{15}$/.test(numero)){
+            console.error('Le numéro doit contenir exactement 15 chiffres');
+            return false;
+        }
+        const partieNumerique = numero.substring(0,13);
+        const cleDonner = numero.substring(13);
+        if(partieNumerique.length!==13){
+            console.error('La partie numérique doit être composé de 13 chiffres');
+            return false;
+        }
+        if(cleDonner.length!==2){
+            console.error('La clé doit être composée de 2 chiffres');
+            return false;
+        }
+        console.log('Numéro : ',numero);
+        console.log('Partie numérique : ',partieNumerique);
+        console.log('Clé de donnée : ',cleDonner);
+        const num = BigInt(partieNumerique);
+        const rest = Number(num % 97n);
+        let cleCalcule = 97-rest;
+        if(cleCalcule===0){
+            cleCalcule=97;
+        }
+        const cleFormate = cleCalcule.toString().padStart(2,'0');
+        if(cleFormate===cleDonner){
+            console.log('Le numéro est valide');
+            return true;
+        }
+        else{
+            console.log('Le numéro est invalide');
+            return false;
+        }
+    }
+    function testVerifierCpam(){
+        const tests = [
+            '299089899123310', // Exemples valides ou invalides
+            '123456789012345',
+            '299089899123309',
+            '299089899123307', 
+            '12345abc789012345',
+            '299089899123400',
+            '299089899123376', 
+            '000000000000000',
+            '299089899123399',
+        ];
+
+        tests.forEach(test => {
+            console.log(`\nTest avec le numéro : ${test}`);
+            const resultat = verifierCleCpam(test);
+            console.log(`Résultat du test : ${resultat ? 'Valide' : 'Invalide'}`);
+        });
+    }
+    testVerifierCpam();
+</script>
+</html>
