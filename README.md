@@ -1,2 +1,3 @@
 index.html est fonctionnel
-index.html est non fonctionnel
+
+index2.html est non fonctionnel
