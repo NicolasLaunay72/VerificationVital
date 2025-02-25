@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+
 </body>
 <script>
-    
+    function verifierCleCpam(numero) {
+        if (!/^\d{15}$/.test(numero)) return false;
+        const partieNumerique = BigInt(numero.slice(0, 13));
+        return (97n - (partieNumerique % 97)).toString().padStart(2, '0') === numero.slice(13);
+    }
+    function testVerifierCpam() {
+        ['299089899123310', '123456789012345', '299089899123309', '299089899123307', '12345abc789012345', '299089899123400', '299089899123376', '000000000000000', '299089899123399'
+        ].forEach(test => console.log(`${test}:${verifierCleCpam(test) ? 'Valide' : 'Invalide'}`));
+    }
+    testVerifierCpam();
 </script>
+
 </html>
